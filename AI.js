@@ -18,7 +18,7 @@ var AI = function(level) {
 
   // private function: make the AI player take a blind move
   //that is: choose the cell to place its symbol randomly
-  //@param turn [String]: the player to play either X or O. 
+  //@param turn [String]: the player to play either X or O.
 
   function takeABlindMove(turn) { ... }
 
@@ -55,3 +55,35 @@ var AI = function(level) {
     }
   }
 };
+
+    //constructs an action that the AI player could make
+    //@param position [number]: the cell position that the ai would make its action in
+
+    var AIAction = function(pos) {
+
+      // public: the pos on the board that the action would put the letter on
+      thismovePosition = pos;
+
+      //public: the minimax value of the stae that the action leads to when applied
+      this.minimaxVal = 0;
+
+      //public: applies the action to a state to get to the next state
+      //@param state [state]: the state to apply the action to
+      //@return [state]: the next state
+
+      this.applyTO = function (state) {
+          var next = new State(state);
+
+          //put the letter on the baord
+          next.board[this.movePosition] = state.turn;
+
+          if(state.turn === "0")
+              next.oMovesCount++;
+
+          next.advanceTurn();
+
+          return next;
+
+      }
+
+    };
