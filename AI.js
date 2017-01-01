@@ -63,37 +63,117 @@ var AI = function(level) {
                       return stateScore;
                   }
               }
-
-
-
-
-
       }
-
-
-
-
   }
-
-
 
   // private function: make the AI player take a blind move
   //that is: choose the cell to place its symbol randomly
   //@param turn [String]: the player to play either X or O.
 
-  function takeABlindMove(turn) { ... }
+  function takeABlindMove(turn) {
+    var available = game.currentState.emptyCells();
+    var randomCell = available[Math.floor(Math.random() * available.length)];
+    var action = new AIAction(randomCell);
+
+    var next = action.applyTo(game.currentState);
+
+    ui.insertAt(randomCell, turn);
+
+    game.advanceTo(next);
+}
 
   // prv fn: make the ai player take a novice moves
   // that is: mix between choosing the optimal and suboptimal minimax decisions (between blind and master)
   //@param turn [String]: the player to play either X or O
 
   function takeANoviceMove(turn) { ... }
+  var available = game.currentState.emptyCells();
 
+    //enumerate and calculate the score for each available actions to the ai player
+    var availableActions = available.map(function(pos) {
+        var action =  new AIAction(pos); //create the action object
+
+        //get next state by applying the action
+        var nextState = action.applyTo(game.currentState);
+
+        //calculate and set the action's minimax value
+        action.minimaxVal = minimaxValue(nextState);
+
+        return action;
+    });
+
+    //sort the enumerated actions list by score
+    if(turn === "X")
+        //X maximizes --> decend sort the actions to have the maximum minimax at first
+        availableActions.sort(AIAction.DESCENDING);
+    else
+        //O minimizes --> ascend sort the actions to have the minimum minimax at first
+        availableActions.sort(AIAction.ASCENDING);
+
+
+
+     //take the optimal action 40% of the time
+     //take the 1st suboptimal action 60% of the time
+
+    var chosenAction;
+    if(Math.random()*100 <= 40) {
+        chosenAction = availableActions[0];
+    }
+    else {
+        if(availableActions.length >= 2) {
+            //if there is two or more available actions, choose the 1st suboptimal
+            chosenAction = availableActions[1];
+        }
+        else {
+            //choose the only available actions
+            chosenAction = availableActions[0];
+        }
+    }
+    var next = chosenAction.applyTo(game.currentState);
+
+    ui.insertAt(chosenAction.movePosition, turn);
+
+    game.advanceTo(next);
+};
   //prv fn: make AI make master moves
   //that is: choose the optimal or best minimax decision
   //@param turn [String]: the player to play X or O
 
-  function takeAMasterMove(turn) { ... }
+  function takeAMasterMove(turn) {
+    var available = game.currentState.emptyCells();
+
+ //enumerate and calculate the score for each avaialable actions to the ai player
+ var availableActions = available.map(function(pos) {
+     var action =  new AIAction(pos); //create the action object
+
+     //get next state by applying the action
+     var next = action.applyTo(game.currentState);
+
+     //calculate and set the action's minmax value
+     action.minimaxVal = minimaxValue(next);
+
+     return action;
+ });
+
+ //sort the enumerated actions list by score
+ if(turn === "X")
+     //X maximizes --> descend sort the actions to have the largest minimax at first
+     availableActions.sort(AIAction.DESCENDING);
+ else
+     //O minimizes --> acend sort the actions to have the smallest minimax at first
+     availableActions.sort(AIAction.ASCENDING);
+
+
+ //take the first action as it's the optimal
+ var chosenAction = availableActions[0];
+ var next = chosenAction.applyTo(game.currentState);
+
+ // this just adds an X or an O at the chosen position on the board in the UI
+ ui.insertAt(chosenAction.movePosition, turn);
+
+ // take the game to the next state
+ game.advanceTo(next);
+}
 
   //public method notify the when the AI will make a play
   //@param_game [game]: the game the AI will play
