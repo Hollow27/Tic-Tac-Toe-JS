@@ -39,8 +39,8 @@ $(".start").click(function() {
 
 /*
  * click on cell (onclick div.cell) behavior and control
- * if an empty cell is clicked when the game is running and its the human player's trun
- * get the indecies of the clickd cell, craete the next game state, upadet the UI, and
+ * if an empty cell is clicked when the game is running and its the human player's turn
+ * get the indices of the clicked cell, create the next game state, update the UI, and
  * advance the game to the new created state
  */
  $(".cell").each(function() {
