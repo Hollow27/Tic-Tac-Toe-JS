@@ -1,13 +1,12 @@
-/*
- * object to contain all items accessable to all control functions
- */
+
+// object to contain all items accessable to all control functions
+
 var globals = {};
 
-/*
- * choosing difficulty level (onclick span.level) behavior and control
- * when a level is clicked, it becomes highlighted and the "ai.level" variable
- * is set to the chosen level
- */
+
+//choosing difficulty level (onclick span.level) behavior and control
+//when a level is clicked, it becomes highlighted and the "ai.level" variable is set to the chosen level
+
 $(".level").each(function() {
     var $this = $(this);
     $this.click(function() {

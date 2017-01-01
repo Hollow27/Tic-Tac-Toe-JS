@@ -1,13 +1,13 @@
-/*
-*Represents a state in the game
-*@param old [State]: old state to initialize the new state
-*/
+
+//Represents a state in the game
+//@param old [State]: old state to initialize the new state
+
 
 var State = function(old) {
 
-    /*
-    * public" the player who has the turn to player
-    */
+
+    //public" the player who has the turn to player
+
 
     this.turn = "";
 
