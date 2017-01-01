@@ -14,7 +14,68 @@ var AI = function(level) {
   // @parameter stte [State]: the state to calculate its minimax value
   //@returns [number]: the minimax value of the state
 
-  function minimaxValue(state) { ... }
+  function minimaxValue(state) {
+      if(state.isTerminal()) {
+        //a terminal game state is the base case
+        return Game.score(state);
+
+      }
+      else {
+          var stateScore; //this stores the minimax value we'll compute
+
+          if(state.turn === "X")
+          // X minimizes -> initialize to a value smaller than any posibilities
+              stateScore = -1000;
+          else {
+            // O minimizes -> initialize to a value larger than any possibility
+              stateScore = 1000;
+
+
+                      var availablePositions = state.emptyCells();
+
+                      //enumerate next available states using the info form available positions
+                      var availableNextStates = availablePositions.map(function(pos) {
+                          var action = new AIAction(pos);
+
+                          var nextState = action.applyTo(state);
+
+                          return nextState;
+                      });
+
+                      // calculate the minimax value for all available next state and evaluate the current state's value
+                      availableNextStates.forEach(function(nextState) {
+
+                          var nextScore = minimaxValue(nextState); //recursive call
+
+                          if(state.turn === "X") {
+                              // X wants to maximize --> update stateScore iff nextScore is larger
+                              if(nextScore > stateScore)
+                                  stateScore = nextScore;
+                              }
+                          else {
+                              // O wants to minimize --> update stateScore iff nextScore is smaller
+                              if(nextScore < stateScore)
+                                  stateScore = nextScore;
+                          }
+                      });
+
+                      //backup the minimax value
+                      return stateScore;
+                  }
+              }
+
+
+
+
+
+      }
+
+
+
+
+  }
+
+
 
   // private function: make the AI player take a blind move
   //that is: choose the cell to place its symbol randomly
