@@ -1,6 +1,6 @@
 # Tic-Tac-Toe-JS
 
-#Building a Tic Tac Toe AI with Javascript
+#Building a Tic Tac Toe Game (with AI composed of 3 levels) with Javascript
 
 When we say the word game in the context of AI we usually don’t mean it in the sense of entertainment games, instead we refer to a more general definition of a game:
 
