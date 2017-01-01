@@ -86,6 +86,21 @@ var AI = function(level) {
   // that is: mix between choosing the optimal and suboptimal minimax decisions (between blind and master)
   //@param turn [String]: the player to play either X or O
 
+/*
+A quick example to explain the though process behind the novice Ai design.
+Since we've decided that an AI would choose the optimal choice 40% of the time and an the first suboptimal choice 60% of the time,
+we need to do a little probability here.
+
+var P = 40; //some probability in percent form
+if(Math.random()*100 <= P) {
+    // carry out the probable task with probability P
+}
+else {
+   // carry out the other probable task with probability 1 - P
+}
+
+*/
+
   function takeANoviceMove(turn) { ... }
   var available = game.currentState.emptyCells();
 
