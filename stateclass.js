@@ -11,7 +11,7 @@ var State = function(old) {
 
     this.turn = "";
 
-    //public: the number of movesof the AI player
+    //public: the number of moves of the AI player
 
     this.oMovesCount = 0;
 
